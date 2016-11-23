@@ -1,0 +1,368 @@
+﻿1) Como obter 6 Flight Modes Juntando Chaves com os nomes dos Modes saindo no Aurora 9
+
+Step 1,
+    Define channel 5 as Aux 1 channel switch NULL
+
+Step 2.
+    Menu (FLT.COND)
+    Assign Flight Cond
+
+    1.Normal (default): Vai ser o Stabilized (mais nao da' pra' renomear!) Fica como se fosse a chave (E,0)
+    2.St. Simple (E,1) : Vai ser o Stabilized Simple
+    3.Alt Hold (E,2)
+    4.Loiter (F,1)
+    5.Auto (G,1)
+    6.RTL (H, 1)
+
+    Assign to the switches you prefer (I used E,F,G,H)
+    I use T.Link: ACT on all.
+    Obs.: Tem que definir para CADA chave onde e' ON e onde e' OFF !!
+
+Step 3.
+    Menu (P.Mixes)
+    Assign Programmable Mixes 1
+
+    1. (Vaziu)->Aux1       obs.: Da' pra' clicar somente na segunda parte (depois da flecha)
+
+    Programmable Mix-1 ON
+    Aux1 (Normal, St. Simple, Alt hold, Loiter, Auto, RTL) S
+    Rate:0% ACC:0%
+    o:0% OST:(-100, -56, -23, +9, +41, +100)
+
+    Switch NULL
+
+	OBs.:     Make sure you select S not C type off mixer for every flight cond.
+	
+Step 4.
+    Flip the switches you assign the flight cond to see if it shows up on the Arora 9.
+    When the flight cond shows up on the Aurora 9, enter the correct OST value each flightmode on the copter APM
+
+
+	
+2) Como obter 6 Flight Modes Juntando (Mixando) dois canais:
+
+I have programmed switches E (3pos) and F (2pos):
+
+A) Channel Setup:
+Ch 5: AUX1: Switch E - This is the one connected to the APM on Input #5
+Ch 6: AUX2: Switch F
+
+B) End Point Adjustments:
+Ch5: AUX1: +50%, -100%
+Ch6: AUX2: +100%, -100%
+
+C) Programmable Mixes:
+1. AUX2 -> AUX1, Rate +:+45%, -:+20%
+	
+	
+	
+	
+3) Como obter 6 Flight Modes Juntando Channel 5 com um Mixer
+	The very nice thing with Hitec is that you don't waste a receiver channel. The mix is done internaly in the tranmitter.	
+	Just use a mixer without mixing rate, only offset setting.
+
+A) Define channel 5 as Aux 1 channel with a three position switch like E
+
+B) Adjust the CH5 (Aux1) subtrim to something like -20 (subtrim inside menus)
+
+C) Take a free mixer, and set it like this :
+	source channel : nothing
+	destination channel : AUX1
+	Rate : 0%
+	OST : +45%
+	ACC : 0 %
+	
+	Mixer Switch : assign a 2 positions switch like G.
+ 
+D) Eventually adjust a bit those value, checking with the radio test in the CLI, then Enjoy your 6 modes.
+	You need to be near those values :
+
+	1165    pos0
+
+	1295    pos1
+
+	1425    pos2
+
+	1555    pos3 -> default for no PWM signal (usefull with Aurora 25 secondes second failsafe)
+
+	1685    pos4
+
+	1815    pos5
+
+
+4) Fail Safe Mode
+
+	A) Como configurar o Fail Safe Mode - Caso desligue o Radio Aurora 9
+	- Ver como se faz no comeco da pag. 20 do Manual
+	- Colocar o RTL nas chaves do Radio
+	
+	B) Configurar tambem no Mission Planer:
+	- FAil Safe se GPS perder a precisao: vai pro Alt Hold !!
+	- Tem tambem os da Bateria fraca e perder telemetria: disable estes se nao tiver sensor de bateria ou telemetria!!
+	
+5) Procedimentos de Preparacao:
+
+a) Montagem da APM2.5:
+	- Monte a placa APM2.5 sobre um suporte plastico com fita metalica (Aluminio) por baixo para evitar ruidos
+	- Mount the plastic mounting plate for the APM2 board in the center (o chip com acelerometros e giro tem que ficar no meio!!) of the Quad over the power distribution board on 4 standoffs and aligned with the front of the Quad in your choice of X or  +  configuration.
+	- Vibration Dumping: - DO NOT HARD MOUNT THE ARDUFLYER OR APM 2.5 TO THE MULTI CHASSIS		
+	- Important: You should cover your barometric sensor with a piece of foam and tape it to the board
+	- Install your receiver onto the Quad connecting channels 1 – 5 servo leads to the receiver. 
+	- Warning: The receiver plus (red) wires should be cut on all of the ESC control leads.
+	- Warning: Black wires on all but one connector can be clipped but this is generally not necessary since power and ground are common bussed at both the receiver and APM2 board
+	- Conecte o GPS na placa e instaleo em um suporte uns 5cm acima da placa APM2.5
+	
+b) Conheca os LEDs (A informacao do PDF esta ERRADA!!!!):
+	A (red) 	Solid = armed, motors will spin when throttle raisedSingle Blink = disarmed, motors will not spinDouble Blink = disarmed, motors will not spin, cannot arm because of failure in pre-arm checks
+	B (yellow) 	Only flashes along with A and B during calibration or as part of the in-flight auto trim feature
+	C (blue)    Solid = GPS working, 3D lockBlinking = GPS working, no LockOFF = GPS not attached or not working
+	
+c) Alimentacao:
+	- The power jumper JP1 when present connects the power from the ESC’s +5v rail to the +5v power rail on the Inputs.  
+	- If JP1 is removed then you can power the board with a suitable UBEC connected to one of the input 5v pins.  
+	- The APM 2.5 itself draws very little power, typically 200ma. 
+	- Warning: Do not exceed 6.0V DC of power supply input voltage or you will damage your board. 
+	- Warning: The BEC plus (red) and ground (black) wires should be cut on all but one of the ESC control leads. Leave nr.1 wires to suplly power to the APM board via the build in UBEC (5V-2A).
+	- A alimentacao do receiver pode ser conectada diretamente a one of the ESC control leads (NAO conectar nas entradas dos canais do receiver, pois a alimentacao do receiver chegara' somente aos 4,5V e o radio vai ficar apitando um alarme!!)
+	
+d) 
+
+e) Conectar os ESCs nos motores com um dos fios invertido UM SIM, UM NAO em cada motor , para que eles girem em sentidos opostos!!!
+	- Ver configuracao dos numeros dos motores em:  http://code.google.com/p/arducopter/wiki/APM2_Motor_order 
+	- Figura incluida na pasta: FRAMES_hexa_octa_y6.jpg
+	
+f) Mission Planner:
+	- Ensuring that the battery is NOT connected, start the “Mission Planner” and hook up your USB cable between your PC and the APM2 board. 
+	- Channel 5 is set to a 3 position switch for in flight mode changing (ou uma combinacao de chaves para 6 modos, como indicado no item 1)!
+	- Baixe e atualise o Firmware da APM2.5 como HEXACOPTERO em X
+	- Turn on your transmitter e faca a calibragem do Radio.
+	- Selecione os modos de voo:   Select “Flight Modes” on the left side of the Mission Planner screen and set all 6 of the Flight Modes to “Stabilize”, uncheck all the “simple” mode boxes and click the “Save Modes” box. 
+	- Calibre o Compasso e a declinacao magnetica da sua regiao: se tiver o GPS lock, ele pega sozinho a declinacao!
+	- Marque um lugar para o HOME no mission planner!! 
+	- Calibre os acelerometros e nivele o Hexa!!!
+	- Tilt your Quad to various positions to see if the Heads up display follows your expectations also rotate about the center axis to make sure the compass display follows
+	
+g) ESC Calibration:
+	- ESC calibration sets the ESC endpoints to be equal and is essential for correct operation
+	- Warning: Calibre novamente os ESCs se mudar a tensao da bateria de 3celulas para 4!!! (Disconecte as HELICES!!!!)
+	- Tem dois geitos de calibrar: Manual (um por um) ou automatico (todos juntos0). Automatic adjusts ESCs all at once and is easiest
+	- Automatic Setup (all ESCs at once) (Remove the Props and disconnect the USB cable): 
+		a.  Turn on your transmitter and put the throttle full on then connect the Quads battery. 
+		b.  When the APM2 boots the LEDs will cycle continuously. 
+		c.  Disconnect the battery and then reconnect it initiating ESC calibration. 
+		d.  Drop the throttle stick to the lowest position. There should be 1 or 2 confirming beeps and 
+		when you move the throttle up the motors should start and turn in sync. 
+		e.  Disconnect the battery. The ESCs should now be calibrated. 
+	- Se tiver funcionado a calibracao, quando ARMAR (segurar throtle pra baixo e pra direita por 4s) os motores devem rodar em baixa velocidade. (segurar throtle pra baixo e pra esquerda por 4s para DESARMAR).
+	- Warning: Stabilize is the basic and startup mode and is necessary for arming
+	- Esperar ate' a Luz do GPS indicar Lock antes de armar!!!!
+	
+h) Testar todos os controles antes de comecar o voo!!!
+	- Conferir se as baterias do Radio estao carregadas!!!
+	- Conferir se todos os TRIMMERS do Radio estao zerados!!!!!!!!!!!!!!!!!
+	- Conferir a bateria do Hexa!!!!!!!
+	==> ARMAR: Arm the motors by holding the throttle down, and rudder right for 5 seconds.  
+		It takes approximately 5 seconds the first time the copter is armed as it re-initialises the gyros and barometer.  
+	==> Warning: Do not hold the rudder right for too long (>15 seconds) or you will begin the AutoTrim feature.
+	- Segurar o HEXA na mao (bem forte!!!!!!!!) e testar todos os comandos com meia forca no throtle (frente, tras, direita, esquerda, roll...)
+	- Voe um pouco bem perto do chao e teste a estabilidade! 
+	==> Calibre os PIDs se necessario:
+		- Warning: Faca um Backup de todos os parametros do Hexa e salve em um arquivo!!!!!!!!!!!!
+		- DICAS: the most critical is the Rate Roll and Pitch P values
+		    - Too high and the copter will oscillate quickly in roll and/or pitch
+			- Too low and the copter will become sluggish
+			- High powered copter should use a lower gain, under powered copters are a higher gain
+	
+		1) The Stabilize and Angular Rate Control PIDs tune Pitch and Roll:
+		a.  If your Quad twitches or oscillates quickly in Stabilize mode reduce the “Stabilize Angular 
+			Rate P” setting below the default “0.18” (Try “0.10”). (KK X525 = 0.08) 
+		b.  If your Quad wobbles when descending quickly in Stabilize mode increase the “Stabilize 
+			Angular Rate P” setting above the default “0.18” (Try “0.20”). 
+		c.  If your Quad oscillates slowly in Stabilize mode reduce the “Stabilize Control P” setting 
+			below the default “4.5” (Try “4.0”). (KK X525 = 4.5) 
+		d.  If your Quad responds sluggishly in Stabilize mode increase the “Stabilize Control P” 
+			setting above the default “4.5” (Try “5.0”). 
+		2) Adjusting “Yaw Angular Rate PID” P value:
+		a.  If your Quad responds slowly when you deflect the yaw stick, increase the “Yaw Angular 
+			Rate PIDs” P value above the default “0.13” (try “0.15”). (KK X525 = 0.15) 
+		b.  If your Quad rotates too quickly when you deflect the yaw stick, decrease the “Yaw 
+			Angular Rate PIDs” P value below the default “0.13” (try “0.10”). 
+		c.  If your Quad is sluggish in rotating when you deflect the yaw stick, increase the “Yaw 
+			Stabilize PIDs” P value above the default “7.0” (try “8.0”). (KK X525 = 7.0) 
+		d.  If your Quad wobbles slowly when you deflect the yaw stick, decrease the “Yaw Stabilize 
+			PIDs” P value below the default “7.0” (try “6.0”). 
+	==> Tem um geito de associar um channel do radio para ajustar os PIDs em pleno voo!!
+		a.	Connect your APM/Pixhawk/PX4 to the Mission Planner
+		b.	On the mission planner, select Config/Tuning >> APM:Copter Pids
+		c.	Set the CH6 Opt to “Rate Roll/Pitch kP”
+		d.	Set Min to 0.08, Max to 0.20 (most copters ideal gain is within this range although from a small number of copter the Max can be as high as 0.25)
+		e.	Push the “Write Params” button
+		f.	Turn your transmitter’s CH6 tuning knob to the minimum position, press the “Refresh Params” button and ensure that the Rate Roll P and Rate Pitch P values become 0.08 (or something very close)
+		g.	Turn the CH6 knob to it’s maximum position, press “Refresh Params” and ensure the Rate Roll P moves to 0.20
+		h.	Move the CH6 knob back to the middle
+		i.	Arm and fly your copter in Stabilize mode adjusting the ch6 knob until you get a copter that is responsive but not wobbly
+		j.	After the flight, disconnect your lipo battery and reconnect the APM to the mission planner
+		k.	With the CH6 knob in the position that gave the best performance, return to the ArduCopter Pids screen and push the “Refresh Params” button
+		l.	In the Rate Roll P and Rate Pitch P fields re-type the value that you see but just slightly modified so that the mission planner recongises that it’s changed and resends to the APM/PX4 (Note: if you re-type exactly the same number as what appears in Rate Roll P it won’t be updated).  So for example if the Rate Roll P appears as “0.1213″ make it “0.1200″
+		m.	Set Ch6 Opt back to “None” and push “Write Params”
+		n.	Push the Disconnect button on the top right, and the Connect
+		o.	Ensure that the Rate Roll P value is the value that you retyped in step #l
+
+	==> AUTOTUNE : Pode-se Fazer o Tunnig automaticamente em pleno Voo (Ainda nao tentei!! O meu ta' bom como esta'!!): http://copter.ardupilot.com/wiki/autotune/
+	
+i) Testar os Modos de Voo (peca para alguem FILMAR tudo para poder analizar em caso de queda!!! - E ter uma prova de que tudo estava dando certo, antes de dar errado!!!!): 
+	- Comecar pelo Stabilize 
+	- Testar o Altitude Hold : ele so' usa o barometro para isso e deve funcionar Perfeitamente!!!
+	- Testar o Loiter: Muito cuidado, pois ele usara' o GPS que deve estar achando varios satelites (9-12) (da pra ver nos parametros do misson planner (na tela do Mapa) quantos satelites lockou!!)
+	- Warning: se comecar a balancar e dar um circulo, abortar IMEDIATAMENTE pro Stabilize, pois dizem que vai cair na certa!!!!
+		- Se isso acontecer, pouse, desligue, ligue de novo e espere bastante pra o GPS lockar em varios satelites!!!!!!!
+		- Olhar o parametro HDPO que indica o quao bom esta' a recepcao do GPS: tem que estar menor que 1,5 !!!
+	- Testar o RTL (Return Home and Land) SOMENTE se o Loiter funcionar PERFEITO!!!!!!!!!!!!!!!!!!!!
+		- Nao esqueca de setar o HOME!!!!!!
+		- Nao esqueca que ele vai descer EM CIMA DE VOCE!!!!!!!!!!!!!
+		- Nao esqueca que nao pode ter nada (notebook, cabos, ferramentas....) perto do HOME para ele nao bater ao pousar!!!
+		- Nao esqueca que ele vai virar a frente ao voltar para o Home e se tiver que abortar para o Stabilize, o piloto vai se perder em relacao a onde esta' a frente do Hexa!!! Tem que ficar Ligado!!!!
+		
+		
+6) Flight Modes:		(http://copter.ardupilot.com/wiki/flight-modes/)
+
+6.1)  “Simple” and “Super Simple” modes are used in combination with the Stabilize, Sport, Drift and Land flight modes.
+    They allow the pilot to control the movement of the copter from the pilot’s point of view regardless of which way the copter is facing.
+    Useful for new pilots who have not mastered adjusting their roll and pitch inputs depending upon which way the vehicle is facing and for cases when the copter is far enough away that it’s heading is not apparent.
+    Simple Mode allows you to control the copter relative to the copters heading at take off and relies only on a good compass heading.
+    Super Simple Mode allows you to control the copter relative to it’s direction from home (i.e. where it was armed) but requires a good GPS position.
+    Either mode can be assigned to a particular flight mode switch position or can be enabled/disabled from the Ch7/Ch8 switches.
+
+
+6.1.1) Warnings:
+
+    When using Simple Mode, you (the pilot) must stay in the same orientation.
+        If you turn 90°, then pitch will become roll!
+        If you want to rotate yourself and keep Simple mode - - simple, you need to land, disarm and reorient the front of the copter to your new away from the pilot direction and then re-arm and take off. 
+
+    To use Simple mode set the copter on the ground pointing away from you.
+        Arm the copter. (Unless one of the primary Flight Modes requires GPS it is NOT necessary to acquire GPS lock).
+        Advancing the Pitch control stick forward causes the copter to fly away from you and Pitch back causes it to fly towards you.
+        Moving the Roll control stick to the right causes the copter to go to the right and Roll left causes it to go to the left.
+        Moving the Yaw control stick causes the copter to rotate, but its heading does NOT affect direction the copter will go when the Pitch or Roll control is used.
+        The Throttle control stick controls altitude as is normal for whichever mode is selected as being under Simple mode control. 
+    For Simple mode the desired orientation is set when the copter is armed.
+        Re-arming the copter will reset the "home" orientation. 
+    Simple mode can be selected as the manual control mode of any other mode, as shown in the Mission Planner setup screen above. 
+
+    Simple mode is especially useful for flying at the edge of visual range, but not so useful for FPV.
+        If your copter has gotten to be too far away you can use a Simple mode specified Stabilize mode to bring it back to a closer range without using RTL mode (RTL does not work if the GPS has no fix). 
+    Simple mode can even be useful for mechanical failure recovery.
+        You could lose a motor on a hexa or octo setup causing your copter to spin.
+        If you switch to a simple mode it can allow you sufficient control to recover and land the copter.
+        Providing you have sufficient power in your remaining motors to maintain altitude. 
+
+6.1.2)	==> Assigning a Switch:    Simple mode can also be changed with Channel 7 or 8 input using a 2 or 3 position switch. A 3 position switch can be used to select between Normal, simple and super simple modes.
+			If you choose this option of enabling Simple mode via Channel 7 or 8, your normal mode switch settings will be overwritten. 
+		==> Tem que ligar um parametro: "Super Simple Mode Enable" e dizer quais os modos que vao usar o super simple!!
+   
+6.2) Super Simple Mode
+
+    A twist on Simple mode, Super Simple mode uses your home position as the reference for forward.
+        If you fly > 10m away, the copter will constantly recalculate it's orientation so that:
+            Pitch forward moves the copter away from you
+            Pitch back moves the copter towards you
+            Roll Left causes the copter to orbit counter clockwise around you towards the left.
+            Roll Right causes the copter to orbit clockwise around you towards the right.
+            The Yaw control stick will cause the copter to rotate, but its heading does NOT affect direction the copter will go when Pitch or Roll control is used. (Roll and Pitch motion is relative to the GPS home position determined at take off not relative to copter heading).
+            The Throttle control stick controls altitude as is normal for whichever mode is selected as being under Super Simple mode control. 
+        This makes for very intuitive flying and removes the need to worry about the original orientation.
+        Inside the 10m circle, the most recent orientation is kept. 
+    In order to successfully use Super Simple mode:
+        You must use the GPS and you must set home by achieving GPS lock (GPS blue LED and APM blue LED on solid not blinking) before arming and takeoff.
+        If you fly around and achieve lock in the air, this will be your new home location.
+        Flying 10m from this location will suddenly reorient the copter.
+        To avoid this issue wait till you have GPS lock (GPS blue LED and APM blue LED on solid not blinking)before arming and flying when you are going to use Super Simple mode. 
+    Super Simple mode is enabled by setting the parameter named SUPER_SIMPLE to 1 (0 = disabled = default) in the Parameter List in the Mission Planner's Configuration section.
+        When SUPER_SIMPLE is enabled all modes selected as Simple will be in fact Super Simple.
+        Really Super Simple right! 
+		
+7) Troubleshooting:
+	1) Passo: Mensagens de Erro!
+		1: Main (never used)
+		2: Radio
+			ECode 1: “Late Frame” which means the APM’s onboard ppm encoder did not provide an update for at least 2 seconds
+			ECode 0: error resolved which means the ppm encoder started providing data again
+		3: Compass
+			ECode 1: the compass failed to initialise (likely a hardware issue)
+			ECode 2: failure while trying to read a single value from the compass (probably a hardware issue)
+			ECode 0: above errors resolved
+		4: Optical flow
+			Ecode 1: failed to initialise (likely a hardware issue)
+		5: Throttle failsafe
+			ECode 1: throttle dropped below FS_THR_VALUE meaning likely loss of contact between RX/TX
+			ECode 0: above error resolve meaning RX/TX contact likely restored
+		6: Battery failsafe
+			ECode 1: battery voltage dropped below LOW_VOLT or total battery capacity used exceeded BATT_CAPACITY
+		7: GPS failsafe
+			ECode 1: GPS lock lost for at least 5 seconds
+			ECode 0: GPS lock restored
+		8: GCS (Ground station) failsafe
+			ECode 1: updates from ground station joystick lost for at least 5 seconds
+			ECode 0: updates from ground station restored
+		9: Fence
+			ECode 1: altitude fence breached
+			ECode 2: circular fence breached
+			ECode 3: both altitude and circular fences breached
+			ECode 0: vehicle is back within the fences
+		10: Flight Mode
+			ECode 0 ~ 10: the vehicle was unable to enter the desired flight mode
+			(0=Stabilize, 1=Acro, 2=AltHold, 3=Auto, 4=Guided, 5=Loiter, 6=RTL, 7=Circle, 8=Position, 9=Land, 10=OF_Loiter)
+		11: GPS
+			ECode 2: GPS Glitch
+			ECode 0: GPS Glitch cleared
+		12: Crash Check
+			ECode 1: Crash detected
+			
+	2) Passo: GPS glitches
+		- Deve-se conferir no Log se esta' dando alguma mensagem de Erro, principalmente de GPS.
+			- Olhar nr. de Satelites: tem que ficar acima de 9 pra funcionar o Loiter, RTL ou Auto
+			- An hdop value of 1.5 (displayed as 150) or lower is very good.  Over 2.0 (i.e. 200) indicates a bad position value. 
+		- Olhar no Log file e procurar por (filter) Error Mesages (ERR): Sub Systems / Error Codes
+
+	3) Passo: Vibracao!
+		- Abilitar a geracao do log dos acelerometros: IMU no parametro LOG_BITMASK = 958
+		- Analizar a vibracao tem que ficar entre +5 e -5 para X e Y e entre 15 e 25 para o Z
+		- Se estiver muito acima destas faixas, o Alt Hold e Loiter usam tambem os acelerometros para manter as posicoes e isso vai gerar erros.
+		- Aqui ensina como fazer isso: http://copter.ardupilot.com/wiki/common-diagnosing-problems-using-logs/#Compass_interference
+		- Para resolver, seguir as dicas de: http://fpvlab.com/forums/showthread.php?4251-Vibration-Dampening-amp-Isolation-Solutions-Guide
+
+	4) Passo: Compass interference
+		- Se nao tiver usando um GPS com compasso integrado, usar o compasso da placa pode gerar problemas de variacao do Heading!
+		- Isso acontece porque nos cabos de energia passam grandes correntes (cerca de 20 A) e isso induz um campo magnetico grande.
+		- Para testar se isso esta acontecendo: http://copter.ardupilot.com/wiki/ac_compasssetupupadvanced/#Compassmot_8211_compensation_for_interference_from_the_PDB_ESC_motors
+			- Compassmot – compensation for interference from the PDB, ESC, motors
+			- This “compassmot” set-up helps compensate for interference on the compass from the power-distribution-board (and wires), ESC, motors and batteries.  Please follow these instructions:
+			- ESSE TESTE TAMBEM GRAVA UNS PARAMETROS QUE COMPENSAM DINAMICAMENTE A INTERFERENCIA!!		
+	- Teste:
+    1 Enable the 3DR power module or Non-3dr current monitor if present.  If present this will allow more accurate compensation because the interference is linear with current drawn but not perfectly linear with throttle.
+    2 Nao precisa fazer isso se amarrar direito o Hexa: Disconnect your props, flip them over and rotate them one position around the frame.  In this configuration they should push the copter down into the ground when the throttle is raised
+    3 Secure the copter (perhaps with tape) so that it does not move
+    4 Turn on your transmitter
+    5 Connect your vehicle’s Lipo battery
+    6 Connect your APM/PX4 to your computer with the usb cable
+    7 Open the mission planner’s terminal screen, press the “Connect APM” or “Connect PX4″ button
+    8 At the prompt type setup and then compassmot.
+		- If you have a PowerModule/Current monitor enabled you should see “measuring compass vs CURRENT” otherwise you will see “measuring compass vs THROTTLE”
+
+    9 You should hear your ESCs arming beep
+    10 Raise the throttle slowly to between 50% ~ 75% (the props will spin!) for 5 ~ 10 seconds
+    11 Quickly bring the throttle back down to zero
+    12 Press enter to complete the calibration
+    13 Check the % of interference displayed.  If it is less than 30% then your compass interference is acceptable and you should see good Loiter, RTL and AUTO performance.  If it is 31% ~ 60% then the interference is in the “grey zone” where it may be ok (some users are fine, some are nm If it is higher than 60% you should try moving your APM/PX further up and away from the sources of interference or consider purchasing an external compass or GPS+compass module.
+	
+		- Para concertar, coloque um papel aluminio embaixo da placa (nos meus testes, aterrar o aluminio piorou!!??)
+		- Levante mais a placa pra ficar mais longe dos cabos!
+		- Eu levantei com uma esponja de lavar louca e ficou muito bom: a interferencia baixou de 270% pra 38%
+
+
+
+xxx) No Mission Planner se der problema com os Modos ficarem Unknown
+		--> Crtl + F    --> Param Gen
+
+	- Isso aconteceu no ArduRover
