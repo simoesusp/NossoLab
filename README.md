@@ -1,5 +1,5 @@
 # NossoLab
-A hackerspace dedicated to the students of Computer Engineering at the University of Sao Paulo where people with common interests in computers, electronics and robotics can meet, socialize and collaborate in eachother projects. Nosso Lab == Our Lab!!
+A hackerspace dedicated to the students of Computer Engineering at the University of Sao Paulo where people with common interests in computers, electronics and robotics can meet, socialize and collaborate in each other projects. Nosso Lab == Our Lab!!
 
 => O propósito deste laboratório é proporcionar para que grupos de alunos de várias disciplinas do curso de Engenharia de Computação possam dispor de um espaço físico com infraestrutura para o projeto de robôs e aeronaves autônomas e seus sistemas de computação e sensoriamento embarcados. É uma iniciativa que visa motivar os alunos iniciantes no curso, para que possam vivenciar o desenvolvimento de projetos com aplicações práticas em diversos setores da sociedade, convivendo com professores e alunos mais maduros no curso, bem como com profissionais interessados nas aplicações dos sistemas desenvolvidos.  
 
